@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>README.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> or <div class="page"></div> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="juudan_to_kikakouzou_ippan_extracter">juudan_to_kikakouzou_ippan_extracter</h1>
+<p>縦断図dxfファイルから値を抽出して照査用のExcelファイルを作成します。</p>
+<h2 id="目次">目次</h2>
+<ol>
+<li>処理内容</li>
+<li>使い方</li>
+<li>注意事項</li>
+<li>フォルダ構成</li>
+<li>フォルダ・ファイル説明</li>
+<li>エラー対応</li>
+<li>各種情報</li>
+</ol>
+<hr>
+<hr>
+<h1 id="1-処理内容">1. 処理内容</h1>
+<ol>
+<li>inputフォルダ直下のdxfファイルを参照する</li>
+<li>dxfファイルから各種エンティティを読み取る</li>
+<li>templateフォルダ直下のExcelファイルに値を転記する</li>
+<li>outputフォルダ直下にタイムスタンプ付きフォルダを作成する</li>
+<li>当該タイムスタンプ付きフォルダに処理済のExcelファイルを保存する</li>
+</ol>
+<hr>
+<hr>
+<h1 id="2-使い方">2. 使い方</h1>
+<h2 id="事前準備">事前準備</h2>
+<h3 id="0-フォルダ構成が以下のようになっているか確認してください">0. フォルダ構成が以下のようになっているか確認してください。</h3>
+<p><img src="_assets/how_to_use_0.png" alt="alt text"></p>
+<h2 id="juudan_to_kikakouzou_ippan_extracterexe-を使用する場合">juudan_to_kikakouzou_ippan_extracter.exe を使用する場合</h2>
+<h3 id="1-inputフォルダにdxfファイルを保存します">1. inputフォルダにdxfファイルを保存します。</h3>
+<p><img src="_assets/how_to_use_1.png" alt="alt text"></p>
+<h3 id="2-juudan_to_kikakouzou_ippan_extracterexe-をダブルクリックします">2. juudan_to_kikakouzou_ippan_extracter.exe をダブルクリックします。</h3>
+<p><img src="_assets/how_to_use_2.png" alt="alt text"></p>
+<h3 id="3-windowsディフェンダーが表示されたらブロックの解除をクリックします">3. Windowsディフェンダーが表示されたら「ブロックの解除」をクリックします。</h3>
+<p><img src="_assets/how_to_use_3.png" alt="alt text"></p>
+<h3 id="4-ターミナルが起動して処理確認ウィンドウが表示されたらokをクリックします">4. ターミナルが起動して「処理確認」ウィンドウが表示されたら、「OK」をクリックします。</h3>
+<p><img src="_assets/how_to_use_4.png" alt="alt text"></p>
+<h3 id="5-処理完了ウィンドウが表示されたらokをクリックします">5. 「処理完了」ウィンドウが表示されたら、「OK」をクリックします。</h3>
+<p><img src="_assets/how_to_use_5.png" alt="alt text"></p>
+<h3 id="6-outputフォルダで処理結果を確認します">6. outputフォルダで処理結果を確認します。</h3>
+<p><img src="_assets/how_to_use_8.png" alt="alt text"></p>
+<h3 id="7-inputフォルダで-処理が完了したdxfファイルがused_-フォルダに移動しているか確認します">7. inputフォルダで 処理が完了したdxfファイルが、used_* フォルダに移動しているか確認します。</h3>
+<p><img src="_assets/how_to_use_10.png" alt="alt text"></p>
+<h3 id="8-処理に問題があった場合_logsフォルダの該当処理日時のlogファイルを管理者に共有してください詳しくは6-エラー対応をご参照ください">8. 処理に問題があった場合、_logsフォルダの該当処理日時のlogファイルを管理者に共有してください（詳しくは「6. エラー対応」をご参照ください）。</h3>
+<h2 id="alt-text"><img src="_assets/how_to_use_12.png" alt="alt text"></h2>
+<hr>
+<h2 id="juudan_to_kikakouzou_ippan_extracterpy-を使用する場合">juudan_to_kikakouzou_ippan_extracter.py を使用する場合</h2>
+<p>juudan_to_kikakouzou_ippan_extracter.exe の代わりに、Pythonスクリプトとして実行することができます。<br>
+juudan_to_kikakouzou_ippan_extracter.py　は、<strong>tools/controller.py</strong>を編集して設定を変更することができます。</p>
+<h3 id="事前準備初回のみ">事前準備（初回のみ）</h3>
+<ol>
+<li>
+<p>Python（バージョン3.13系）を次のWebサイトからダウンロードしてしてください。
+<br>
+<a href="https://www.python.org/downloads/">https://www.python.org/downloads/</a></p>
+</li>
+<li>
+<p>ダウンロードしたインストーラを起動して、「Add Python to PATH」にチェックを入れてインストールしてください。
+<br>
+<img src="_assets/how_to_set_py_0.png" alt="alt text"></p>
+</li>
+</ol>
+<hr>
+<h3 id="セットアップ手順初回のみ">セットアップ手順（初回のみ）</h3>
+<ol>
+<li>
+<p>本ツールのフォルダを開きます。</p>
+</li>
+<li>
+<p><code>00_install.bat</code> をダブルクリックします。
+<br>
+<img src="_assets/how_to_set_py_1.png" alt="alt text"></p>
+</li>
+<li>
+<p>以下のようなメッセージが表示され、セットアップが実行されます。
+<br>
+<img src="_assets/how_to_set_py_2.png" alt="alt text"></p>
+</li>
+<li>
+<p>「セットアップ完了」と表示されたら終了です。</p>
+</li>
+</ol>
+<p>※初回は数分かかる場合があります</p>
+<hr>
+<h3 id="実行方法">実行方法</h3>
+<ol>
+<li>
+<p>本ツールのフォルダを開きます。</p>
+</li>
+<li>
+<p><code>01_run.bat</code> をダブルクリックします。
+<br>
+<img src="_assets/how_to_use_py_0.png" alt="alt text"></p>
+</li>
+<li>
+<p>処理確認ダイアログが表示されるので、「OK」を押して実行してください。
+<br>
+<img src="_assets/how_to_use_py_1.png" alt="alt text">
+<br>
+<img src="_assets/how_to_use_py_2.png" alt="alt text"></p>
+</li>
+</ol>
+<hr>
+<hr>
+<h1 id="3-注意事項">3. 注意事項</h1>
+<ol>
+<li>
+<p>帯の中におさまっていないTEXTエンティティは取得しません。</p>
+<ul>
+<li>例外として、&quot;勾配&quot; は、上にはみだすテキストエンティティは取得します。</li>
+<li>MTEXT は TEXT に変換して取得します（dxfファイルでは MTEXT のまま維持）。</li>
+</ul>
+</li>
+<li>
+<p>[&quot;曲率&quot;, &quot;片勾配すり付図&quot;, &quot;勾配&quot;] を取得するレイヤーは以下の通りです。</p>
+<ul>
+<li>&quot;D-TTL-BAND&quot;</li>
+</ul>
+<p>※ 01_run.bat での実行に限りますが、取得対象を追加したい場合<br>
+メモ帳などで <strong>tools/controller.py</strong>を開きます。<br>
+<img src="_assets/how_to_edit_01.png" alt="alt text">
+<br>
+Ctrl + F で <strong>BAND_LAYERS</strong> を検索します。<br>
+<img src="_assets/how_to_edit_02.png" alt="alt text">
+<br>
+以下のように要素を追加します。<br></p>
+<pre class="hljs"><code><div># &quot;D-TTR-XXXX&quot; を追加する場合
+BAND_LAYERS: List[str] = [
+   &quot;D-TTL-BAND&quot;,
+   &quot;D-TTR-XXXX&quot;,
+]
+</div></code></pre>
+</li>
+<li>
+<p>&quot;曲率&quot; 帯関係：</p>
+<ol>
+<li>
+<p>&quot;曲率&quot; として識別できる帯タイトルは以下の通りです。</p>
+<ul>
+<li>&quot;曲率&quot;</li>
+<li>&quot;曲線&quot;</li>
+<li>&quot;曲率図&quot;</li>
+<li>&quot;曲線図&quot;</li>
+<li>&quot;曲率方向&quot;</li>
+<li>&quot;曲線方向&quot;</li>
+<li>&quot;曲&quot;, &quot;率&quot;　※ 2つのTEXTに分かれている</li>
+<li>&quot;曲&quot;, &quot;線&quot;　※ 2つのTEXTに分かれている</li>
+<li>&quot;曲&quot;, &quot;図&quot;　※ 2つのTEXTに分かれている</li>
+<li>&quot;曲&quot;, &quot;向&quot;　※ 2つのTEXTに分かれている</li>
+</ul>
+<p>※ 01_run.bat での実行に限りますが、取得対象を追加したい場合<br>
+メモ帳などで <strong>tools/controller.py</strong>を開きます。<br>
+<img src="_assets/how_to_edit_01.png" alt="alt text">
+<br>
+Ctrl + F で <strong>CURVATURE_TITLE_CANDIDATES</strong> を検索します。<br>
+<img src="_assets/how_to_edit_03.png" alt="alt text">
+<br>
+以下のように要素を追加します。<br></p>
+<pre class="hljs"><code><div>(&quot;{帯タイトル}&quot;, &quot;{帯タイトルの取得対象とする最初の1文字}&quot;, &quot;{帯タイトルの取得対象とする最後の1文字}&quot;),
+</div></code></pre>
+</li>
+<li>
+<p>&quot;曲線長&quot; として識別するTEXTは以下の通りです。</p>
+<ul>
+<li>&quot;L=*&quot;</li>
+<li>&quot;L1=*&quot;</li>
+<li>&quot;LC=*&quot;</li>
+<li>&quot;L2=*&quot;</li>
+</ul>
+<p>※ 01_run.bat での実行に限りますが、取得対象を追加したい場合<br>
+メモ帳などで <strong>tools/controller.py</strong>を開きます。<br>
+<img src="_assets/how_to_edit_01.png" alt="alt text">
+<br>
+Ctrl + F で <strong>CURVATURE_L_PREFIXES</strong> を検索します。<br>
+<img src="_assets/how_to_edit_04.png" alt="alt text">
+<br>
+以下のように要素を追加します。<br></p>
+<pre class="hljs"><code><div># &quot;LX=&quot; を追加する場合
+CURVATURE_L_PREFIXES: List[str] = [
+   &quot;L=&quot;,
+   &quot;L1=&quot;,
+   &quot;LC=&quot;,
+   &quot;L2=&quot;,
+   &quot;LX=&quot;,
+]
+</div></code></pre>
+</li>
+<li>
+<p>&quot;曲線半径&quot; として識別するTEXTは以下の通りです。</p>
+<ul>
+<li>&quot;R=*&quot;</li>
+</ul>
+<p>※ 01_run.bat での実行に限りますが、取得対象を追加したい場合<br>
+メモ帳などで <strong>tools/controller.py</strong>を開きます。<br>
+<img src="_assets/how_to_edit_01.png" alt="alt text">
+<br>
+Ctrl + F で <strong>CURVATURE_R_PREFIXES</strong> を検索します。<br>
+<img src="_assets/how_to_edit_05.png" alt="alt text">
+<br>
+以下のように要素を追加します。<br></p>
+<pre class="hljs"><code><div># &quot;RX=&quot; を追加する場合
+CURVATURE_R_PREFIXES: List[str] = [
+   &quot;R=&quot;,
+   &quot;RX=&quot;,
+]
+</div></code></pre>
+</li>
+<li>
+<p>&quot;パラメータ&quot; として識別するTEXTは以下の通りです。</p>
+<ul>
+<li>&quot;A=*&quot;</li>
+</ul>
+<p>※ 01_run.bat での実行に限りますが、取得対象を追加したい場合<br>
+メモ帳などで <strong>tools/controller.py</strong>を開きます。<br>
+<img src="_assets/how_to_edit_01.png" alt="alt text">
+<br>
+Ctrl + F で <strong>CURVATURE_A_PREFIXES</strong> を検索します。<br>
+<img src="_assets/how_to_edit_06.png" alt="alt text">
+<br>
+以下のように要素を追加します。<br></p>
+<pre class="hljs"><code><div># &quot;AX=&quot; を追加する場合
+CURVATURE_A_PREFIXES: List[str] = [
+   &quot;A=&quot;,
+   &quot;AX=&quot;,
+]
+</div></code></pre>
+</li>
+</ol>
+</li>
+<li>
+<p>&quot;片勾配すり付図&quot; 帯関係：</p>
+<ol>
+<li>
+<p>&quot;片勾配すり付図&quot;として識別できる帯タイトルは以下の通りです。</p>
+<ul>
+<li>&quot;片勾配すり付け図&quot;</li>
+<li>&quot;片勾配すり付図&quot;</li>
+<li>&quot;片勾配&quot;</li>
+<li>&quot;片&quot;, &quot;図&quot;　※ 2つのTEXTに分かれている</li>
+<li>&quot;片&quot;, &quot;配&quot;　※ 2つのTEXTに分かれている</li>
+</ul>
+<p>※ 01_run.bat での実行に限りますが、取得対象を追加したい場合<br>
+メモ帳などで <strong>tools/controller.py</strong>を開きます。<br>
+<img src="_assets/how_to_edit_01.png" alt="alt text">
+<br>
+Ctrl + F で <strong>SUPERELEVATION_TITLE_CANDIDATES</strong> を検索します。<br>
+<img src="_assets/how_to_edit_07.png" alt="alt text">
+<br>
+以下のように要素を追加します。<br></p>
+<pre class="hljs"><code><div>(&quot;{帯タイトル}&quot;, &quot;{帯タイトルの取得対象とする最初の1文字}&quot;, &quot;{帯タイトルの取得対象とする最後の1文字}&quot;),
+</div></code></pre>
+</li>
+</ol>
+</li>
+<li>
+<p>&quot;勾配&quot; 帯関係：</p>
+<ol>
+<li>
+<p>&quot;勾配&quot; として識別できる帯タイトルは以下の通りです。</p>
+<ul>
+<li>&quot;勾配&quot;</li>
+<li>&quot;勾&quot;, &quot;配&quot;　※ 2つのTEXTに分かれている</li>
+</ul>
+<p>※ 01_run.bat での実行に限りますが、取得対象を追加したい場合<br>
+メモ帳などで <strong>tools/controller.py</strong>を開きます。<br>
+<img src="_assets/how_to_edit_01.png" alt="alt text">
+<br>
+Ctrl + F で <strong>SLOPE_TITLE_CANDIDATES</strong> を検索します。<br>
+<img src="_assets/how_to_edit_08.png" alt="alt text">
+<br>
+以下のように要素を追加します。<br></p>
+<pre class="hljs"><code><div>(&quot;{帯タイトル}&quot;, &quot;{帯タイトルの取得対象とする最初の1文字}&quot;, &quot;{帯タイトルの取得対象とする最後の1文字}&quot;),
+</div></code></pre>
+</li>
+</ol>
+</li>
+<li>
+<p>&quot;縦断曲線&quot; 関係：</p>
+<ol>
+<li>
+<p>[&quot;縦断曲線長&quot;, &quot;縦断曲線半径&quot;] を取得するレイヤーは以下の通りです。</p>
+<ul>
+<li>&quot;D-STR-DIM&quot;</li>
+<li>&quot;D-STR-HTXT&quot;</li>
+</ul>
+<p>※ 01_run.bat での実行に限りますが、取得対象を追加したい場合<br>
+メモ帳などで <strong>tools/controller.py</strong>を開きます。<br>
+<img src="_assets/how_to_edit_01.png" alt="alt text">
+<br>
+Ctrl + F で <strong>DSTR_LAYERS</strong> を検索します。<br>
+<img src="_assets/how_to_edit_10.png" alt="alt text">
+<br>
+以下のように要素を追加します。<br></p>
+<pre class="hljs"><code><div># &quot;D-STR-HTXT&quot; を追加する場合
+DSTR_LAYERS: List[str] = [
+   &quot;D-STR-DIM&quot;,
+   &quot;D-STR-HTXT&quot;,
+]
+</div></code></pre>
+</li>
+<li>
+<p>&quot;縦断曲線長&quot; として識別するTEXTは以下の通りです。</p>
+<ul>
+<li>&quot;VCL=*&quot;</li>
+</ul>
+<p>※ 01_run.bat での実行に限りますが、取得対象を追加したい場合<br>
+メモ帳などで <strong>tools/controller.py</strong>を開きます。<br>
+<img src="_assets/how_to_edit_01.png" alt="alt text">
+<br>
+Ctrl + F で <strong>VERTICAL_VCL_PREFIXES</strong> を検索します。<br>
+<img src="_assets/how_to_edit_11.png" alt="alt text">
+<br>
+以下のように要素を追加します。<br></p>
+<pre class="hljs"><code><div># &quot;L=&quot; を追加する場合
+VERTICAL_VCL_PREFIXES: List[str] = [
+   &quot;VCL=&quot;,
+   &quot;L=&quot;,
+]
+</div></code></pre>
+</li>
+<li>
+<p>&quot;縦断曲線半径&quot; として識別するTEXTは以下の通りです。</p>
+<ul>
+<li>&quot;VCR=*&quot;</li>
+<li>&quot;R=*&quot;</li>
+</ul>
+<p>※ 01_run.bat での実行に限りますが、取得対象を追加したい場合<br>
+メモ帳などで <strong>tools/controller.py</strong> を開きます。<br>
+<img src="_assets/how_to_edit_01.png" alt="alt text">
+<br>
+Ctrl + F で <strong>VERTICAL_VCR_PREFIXES</strong> を検索します。<br>
+<img src="_assets/how_to_edit_12.png" alt="alt text">
+<br>
+以下のように要素を追加します。<br></p>
+<pre class="hljs"><code><div># &quot;RX=&quot; を追加する場合
+VERTICAL_VCR_PREFIXES: List[str] = [
+   &quot;VCR=&quot;,
+   &quot;R=&quot;,
+   &quot;RX=&quot;,
+]
+</div></code></pre>
+</li>
+<li>
+<p>縦断勾配 が２段の場合、[&quot;縦断曲線長&quot;, &quot;縦断曲線半径&quot;] が上手く取得できないことがあります。</p>
+</li>
+</ol>
+</li>
+</ol>
+<hr>
+<hr>
+<h1 id="4-フォルダ構成">4. フォルダ構成</h1>
+<ul>
+<li>以下の構成を崩さずに使用してください。</li>
+</ul>
+<pre class="hljs"><code><div>
+│
+├─ README.*
+│
+├─ juudan_to_kikakouzou_ippan_extracter.exe
+│
+├─ juudan_to_kikakouzou_ippan_extracter.py
+│
+├─ _assets/
+│
+├─ _logs/
+│
+├─ venv/
+│
+├─ input/
+│
+├─ output/
+│
+├─ template/
+│   └─ 幾何構造表（一般道）.xlsx
+│
+└─ tools/
+　   ├─ controller.py      ← ★設定ファイル
+　   ├─ belt_utils.py
+　   ├─ find_belt_edges_by_text.py
+　   ├─ count_paper_space_layouts.py
+　   ├─ polyline_to_line_keep_others.py
+　   ├─ sanitize_dxf_text.py
+　   ├─ get_curvature.py
+　   ├─ get_superelevation_runoff_rate.py
+　   ├─ get_slope.py
+　   └─ get_vertical_curve.py
+
+</div></code></pre>
+<hr>
+<hr>
+<h1 id="5-フォルダファイル説明">5. フォルダ・ファイル説明</h1>
+<ol>
+<li>
+<p>README.*</p>
+<ul>
+<li>このファイルです。</li>
+</ul>
+</li>
+<li>
+<p>juudan_to_kikakouzou_ippan_extracter.exe</p>
+<ul>
+<li>このツールの実行ファイルです。</li>
+</ul>
+</li>
+<li>
+<p>juudan_to_kikakouzou_ippan_extracter.py</p>
+<ul>
+<li>このツールのメインスクリプトファイルです。</li>
+</ul>
+</li>
+<li>
+<p>_assetsフォルダ</p>
+<ul>
+<li>README.md用の置き場です。</li>
+</ul>
+</li>
+<li>
+<p>_logsフォルダ</p>
+<ul>
+<li>実行ログファイルを保存する場所です。</li>
+<li>実行日から直近7日分を保存し、8日以前分は削除されます。</li>
+</ul>
+</li>
+<li>
+<p>venvフォルダ</p>
+<ul>
+<li>py実行時の仮想環境フォルダです。</li>
+</ul>
+</li>
+<li>
+<p>inputフォルダ</p>
+<ul>
+<li>処理対象dxfファイルを保存する場所です。</li>
+<li>処理済のdxfファイルはinput\used_*フォルダに移動します。</li>
+</ul>
+</li>
+<li>
+<p>outputフォルダ</p>
+<ul>
+<li>処理済のxlsxファイルはoutput\exec_*フォルダに保存されます。</li>
+</ul>
+</li>
+<li>
+<p>templateフォルダ</p>
+<ul>
+<li>幾何構造表（一般道）.xlsx が置いてあります。</li>
+</ul>
+</li>
+<li>
+<p>toolsフォルダ</p>
+</li>
+</ol>
+<ul>
+<li>juudan_to_kikakouzou_ippan_extracter.exe/py が参照する独自関数が置いてあります。</li>
+</ul>
+<hr>
+<hr>
+<h1 id="6-エラー対応">6. エラー対応</h1>
+<p>処理に問題が発生した場合は、以下の情報を管理者へ共有してください。</p>
+<ul>
+<li>_logs フォルダ内のログファイル（当該エラーが発生した時点のもの）</li>
+<li>使用したDXFファイル</li>
+<li>発生手順（どの操作でエラーが出たか簡単に）</li>
+</ul>
+<p>例：
+<code>01_run.bat 実行 → OKを押した直後にエラー</code></p>
+<p>※ログには実行時の設定値（controller.pyの内容）も記録されています。</p>
+<hr>
+<hr>
+<h1 id="7-各種情報">7. 各種情報</h1>
+<h2 id="requirement">Requirement</h2>
+<ul>
+<li>Python 3.14.6</li>
+<li>ezdxf 1.4.3</li>
+</ul>
+<h2 id="author">Author</h2>
+<ul>
+<li>株式会社建設技術研究所</li>
+<li>東北支社 道路・交通部</li>
+<li>本間 京介</li>
+</ul>
+<h2 id="license">License</h2>
+<ul>
+<li>&quot;juudan_to_kikakouzou_ippan_extracter&quot; is Confidential.</li>
+</ul>
+<hr>
+<hr>
+
+</body>
+</html>

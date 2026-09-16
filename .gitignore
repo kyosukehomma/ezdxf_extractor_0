@@ -1,0 +1,32 @@
+# Operational data stays local.
+/input/*
+!/input/.gitkeep
+/output/*
+!/output/.gitkeep
+/_logs/*
+!/_logs/.gitkeep
+
+# Temporary presentation workspaces and build outputs.
+/outputs/
+/build/
+/dist/
+
+# Python environments and caches.
+/venv/
+/.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local configuration and editor/Office temporary files.
+.env
+.env.*
+!.env.example
+.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini
+~$*
