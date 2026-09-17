@@ -1,0 +1,44 @@
+flowchart TD
+    S(["開始：exe または 01_run.bat"])
+    Q{"作成開始の確認で<br/>OKを押した？"}
+    C["キャンセルを表示"]
+    P["設定・ログを準備<br/>input と template を確認"]
+    V{"必要なフォルダと<br/>テンプレートが存在する？"}
+    STOP["エラーを表示して中断"]
+    INPUT["input直下の *.dxf を列挙"]
+    HAS{"対象DXFがある？"}
+    PICK["次のDXFを選択"]
+    READ["DXFを読み込む<br/>線・文字をメモリ上で整理"]
+    GET["4系統の値を抽出<br/>曲率／片勾配摺付率／勾配／縦断曲線"]
+    OK{"Excel用の行データを<br/>作成できた？"}
+    VALUES["15項目を用意<br/>未対応・取得できない値は「-」"]
+    XLS["テンプレートを読み込み<br/>「使用値」A1:B15へ反映"]
+    SAVE["output/exec_日時 にExcel保存<br/>元DXFを input/used_日時 へ移動"]
+    SAVED{"保存・移動が成功？"}
+    SUCCESS["成功ファイル一覧へ追加"]
+    FAIL["失敗をログへ記録<br/>元DXF・出力の有無を確認"]
+    NEXT{"未処理のDXFがある？"}
+    RESULT["ログへ結果を記録<br/>完了／終了メッセージを表示"]
+    REVIEW["評価者が元図・抽出値・設計条件を照合<br/>欠損を補い、Excel数式と最終採否を確認"]
+    OUT{"確認できる出力Excelがある？"}
+    CHECK["入力配置・失敗理由をログで確認"]
+    END(["終了"])
+    S --> Q
+    Q -->|"キャンセル"| C --> END
+    Q -->|"OK"| P --> V
+    V -->|"いいえ"| STOP --> END
+    V -->|"はい"| INPUT --> HAS
+    HAS -->|"なし"| RESULT
+    HAS -->|"あり"| PICK --> READ --> GET --> OK
+    READ -.->|"読込・前処理の例外"| FAIL
+    OK -->|"いいえ"| FAIL
+    OK -->|"はい"| VALUES --> XLS --> SAVE --> SAVED
+    XLS -.->|"Excel読込・書込の例外"| FAIL
+    SAVED -->|"いいえ"| FAIL
+    SAVED -->|"はい"| SUCCESS --> NEXT
+    FAIL --> NEXT
+    NEXT -->|"ある"| PICK
+    NEXT -->|"ない"| RESULT --> OUT
+    OUT -->|"ある"| REVIEW --> END
+    OUT -->|"ない"| CHECK --> END
+    classDef default fill:#f3faf7,stroke:#4c8a75,color:#163a30,stroke-width:1.3px;

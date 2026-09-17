@@ -1,0 +1,54 @@
+%% 縦断図DXF → 幾何構造表（一般道）：簡易処理フロー
+%% 作成日: 2026-09-17
+%% 参照: juudan_to_kikakouzou_ippan_extracter.py / tools/*.py（80dc6bf時点の実装）
+%% 実線は処理の順序、点線は例外経路・補足。
+%% R端子は一覧の次のDXFへ戻ることを示す。長い戻り線は省略。
+%% 説明用の簡易図。判定式・座標条件・セル対応は juudan_flow_detailed.mmd を参照。
+%%{init: {"theme":"base","markdownAutoWrap":false,"themeVariables":{"fontFamily":"Noto Sans JP, Yu Gothic, Meiryo, sans-serif","fontSize":"16px","primaryColor":"#FFFFFF","primaryTextColor":"#26332F","primaryBorderColor":"#01A173","lineColor":"#73867E","secondaryColor":"#EAF7F2","tertiaryColor":"#F5F7F6","clusterBkg":"#FAFCFB","clusterBorder":"#CFDDD7"},"flowchart":{"curve":"linear","nodeSpacing":32,"rankSpacing":42,"htmlLabels":true,"wrappingWidth":420,"subGraphTitleMargin":{"top":8,"bottom":16}}}}%%
+flowchart TB
+    START([開始]) --> CONFIRM{"処理開始を確認"}
+    CONFIRM -->|キャンセル| CANCEL["キャンセルを表示"]
+    CANCEL --> FINISH([終了])
+    CONFIRM -->|OK| PREP["ログを開始し、必須フォルダ・テンプレートを確認<br/>input/used_日時 ・ output/exec_日時 を準備"]
+    PREP --> LIST["input 直下の *.dxf を一度列挙<br/>used フォルダの中は対象外"]
+    LIST --> NEXT{"R：一覧に次のDXFがある？"}
+
+    subgraph ONE["DXFを1ファイルずつ処理"]
+        direction TB
+        READ["DXFを読み、ペーパー空間のレイアウト数を取得<br/>もう一度読み込んで処理用データを用意"]
+        CLEAN["モデル空間で LWPOLYLINE を LINE に分解<br/>MTEXT を TEXT に変換<br/>空白文字・同位置の重複TEXTを除去"]
+        CURVE["曲率帯：R・L・Aと区間の並びを解析<br/>半径・緩和曲線長・曲線長の5値を取得"]
+        RUNOFF["片勾配すり付け帯：分数文字から摺付率を取得<br/>分数の数値が最大となる元の文字列を採用"]
+        SLOPE["勾配帯：i= の値を取得<br/>対象レイヤー全体で符号付き数値の最大値を採用"]
+        VERTICAL["縦断曲線：VCR/R・VCLと勾配の変化を解析<br/>凸半径・凹半径・曲線長の最小値を取得"]
+        VALUES["抽出対象10項目と固定ハイフン5項目を用意<br/>取得できない項目もハイフンのまま次へ進む"]
+        EXCEL["テンプレートからExcelを開く<br/>使用値シートを取得、なければ新規作成<br/>B1〜B15をクリア後、A列の項目名とB列の値を転記"]
+        SAVE["output/exec_日時 にExcelを保存して閉じる<br/>ファイル名：幾何構造表（一般道）_DXF名.xlsx"]
+        MOVE["保存後に元DXFを input/used_日時 へ移動"]
+        OK["移動まで完了したDXFを成功一覧へ追加"]
+
+        READ --> CLEAN --> CURVE --> RUNOFF --> SLOPE --> VERTICAL
+        VERTICAL --> VALUES --> EXCEL --> SAVE --> MOVE --> OK
+    end
+
+    NEXT -->|ある| READ
+    OK --> REPEAT(["Rへ戻る：次のDXFを処理"])
+    ONE -.->|読込・前処理・Excel保存・移動等の例外| FAIL
+    FAIL["そのDXFをスキップし、理由をログへ記録<br/>成功一覧には追加しない"] --> REPEAT
+    FAIL -.-> FAILURE_NOTE["通常、失敗したDXFはinputに残る<br/>保存後の移動失敗でも失敗扱い<br/>保存済みExcelは自動削除されない"]
+    VALUES -.-> GAP_NOTE["抽出関数ごとの失敗はハイフンで継続<br/>全抽出値がハイフンでもExcel保存・DXF移動は可能<br/>処理成功は値の正しさ・取得完了を保証しない"]
+    CLEAN -.-> READ_NOTE["DXFの変換はメモリ内だけで実施<br/>元DXFの内容は書き換えない<br/>画像認識・AutoCADの画面操作はしない"]
+    PREP -.->|必須項目なし・準備中の例外| SETUP_ERROR["ファイルごとの処理に入る前に中断<br/>必須フォルダ・テンプレート欠落はエラー表示"]
+    NEXT -->|ない| REPORT{"成功一覧に1件以上ある？"}
+    REPORT -->|ある| INFO["処理完了：成功したDXFの一覧を表示<br/>失敗したDXFの理由はログで確認"]
+    REPORT -->|ない| EMPTY["処理終了：DXFがありませんでしたと表示<br/>入力0件だけでなく、全件失敗でも同じ表示"]
+    INFO --> FINISH
+    EMPTY --> FINISH
+    FINISH -.-> HUMAN["運用上の確認：出力Excelがある場合は開いて照合<br/>設計速度・道路区分・抽出値・ハイフンを確認<br/>帳票の判定表示と元図面を照らし、最終評価は人が行う"]
+
+    classDef key fill:#EAF7F2,stroke:#01A173,stroke-width:2px,color:#26332F;
+    classDef note fill:#F5F7F6,stroke:#AFBBB5,stroke-dasharray:4 3,color:#53625A;
+    classDef error fill:#F2F3F3,stroke:#5C6761,color:#29312D;
+    class START,VALUES,SAVE,OK,FINISH key;
+    class FAILURE_NOTE,GAP_NOTE,READ_NOTE,HUMAN note;
+    class FAIL,SETUP_ERROR,EMPTY error;
